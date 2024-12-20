@@ -1,46 +1,71 @@
 import pandas as pd 
 from utils import Utils
+import numpy as np
+
+# Función para identificar columnas con valores numéricos o vacíos
+def is_numeric_or_empty(column):
+    return all((value.strip().isdigit() or value.strip() == '') for value in column.dropna())
+
+def convert_floats_to_ints(df):
+    """
+    Convierte todas las columnas de tipo float a tipo int en un DataFrame.
+    Si hay valores NaN en las columnas float, los reemplaza con 0 antes de la conversión.
+    """
+    for col in df.select_dtypes(include=['float']).columns:
+        # Rellenar NaN con 0 y convertir a int
+        df[col] = df[col].fillna(0).astype(int)
+    return df
 
 
 if __name__ == '__main__':
 
     utils = Utils()
-
-
-    # importamos la data
-    data = pd.read_csv('./in/V_ENL2022_300_400.csv', encoding='latin-1')
-
-    # ----------------------------------------------------------------
-    # columnas a eliminar
-    delete_cols = ['CONG','NSELV','HOGAR','TOT_HOGAR','PERS_NRO','P201','VIVIENDA','PER','P203',
-               'P206','P207','P208','PERS_300','INF_300','P306_G','P309','P310_N','P310_A','P310_G','P310_C',
-               'P311','P312_1','P312_2','P312_3','P312_4','P312_5','P312_6','P312_7_8','P313',
-               'PERS_400','INF_400','P407_1','P407_2','P407_3','P407_4','P408','P409','RESFIN','RESFIN_V','FACTOR200_FINAL']
-
-    data.drop(delete_cols, axis=1, inplace=True)    # eliminamos las columnas
+    ruta_xlsx = "./in/04_Diccionario_Variables_ENL2022_1.xlsx"
+    ruta_csv = './in/V_ENL2022_300_400.csv'
     
+    # Cargar todas las hojas del archivo
+    xls = pd.ExcelFile(ruta_xlsx)  
+
+    # Crear un diccionario para almacenar la primera columna de cada hoja
+    columnas_seleccionadas = []
+
+    # Iterar sobre cada hoja
+    for hoja in xls.sheet_names:
+        # Leer la hoja actual
+        df = pd.read_excel(xls, sheet_name=hoja)
+        
+        # Extraer la primera columna (asumiendo que siempre es la columna 0)
+        primera_columna = list(df.iloc[:, 0].values)
+        for col in primera_columna:
+            columnas_seleccionadas.append(col)
+            
     # ----------------------------------------------------------------
-    # columnas filtradas para manipulacion de datos a datos enteros
-    columnas = data.columns
-    # Filtrar columnas que comienzan con 'P2', 'P3' Y 'P4'
-    filtrados = [col for col in columnas if col.startswith(('P2', 'P3','P4'))]
-    #print("columnas filtrados:", filtrados)
-    
-    # ----------------------------------------------------------------
+    # Cargar el dataset original y seleccionar las columnas necesarias
+    df = pd.read_csv(ruta_csv,encoding='latin-1', dtype=str)
 
-    # Creamos un nuevo dataframe para almacenar cambios (solo si disponemos de la memoria sufuciente)
-    new_df = pd.DataFrame()
-    cols_enl = list(set(data.columns) - set(filtrados))
+    # columnas a borrar
+    delete_cols = list(set(df.columns) - set(columnas_seleccionadas))
 
-    for col in cols_enl:
-        new_df[col] = pd.Series(data[col])
+    # borramos las columnas no requeridas
+    df.drop(delete_cols, axis=1, inplace=True)
+    df.drop('FACTOR200_FINAL', axis=1, inplace=True)
 
     # ----------------------------------------------------------------
-    # Modificando los datos de las columnas filtradas PXXX
+    # Modificacion de datos str a numericos
+    # Procesar cada columna
+    for col in df.columns:
+        if is_numeric_or_empty(df[col]):
+            # Convertir a numérico, manejando valores vacíos como NaN y luego reemplazarlos por 0
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
+        else:
+            # Asegurar que las cadenas con ceros iniciales permanezcan como están
+            df[col] = df[col].astype(str)
 
-    for col in filtrados:
-        new_df[col] = utils.mod_col(data,col)
-    
-    print(new_df.head(3))
+    df = convert_floats_to_ints(df)
 
-    new_df.to_csv('./out/data_modificada.csv')
+
+    # Verificar el resultado
+    print(df.info())
+
+    df.to_csv('./out/data_modificada.csv')
+        

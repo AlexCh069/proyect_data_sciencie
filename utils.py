@@ -15,17 +15,13 @@ class Utils:
         valores = list(data[name_col].values)
         valores_modificados = []
 
-        for val in valores:
-            if type(val) == 'int64':
-                valores_modificados.append(val)
+        # Filtramos elementos no vacíos
+        elementos_validos = [x for x in valores if x.strip()]
 
-            else:
-                # Si es un string que contiene un numero, lo pasamos a int
-                try:
-                    valores_modificados.append(int(val))
-                except ValueError:
-                    # Si no es un numero, lo dejamos como esta
-                    valores_modificados.append(None)
+        # Verificar si todos los elementos no vacíos son numéricos
+        if all(x.replace('.', '', 1).isdigit() for x in elementos_validos):
+            valores_modificados = [float(x) if '.' in x else int(x) for x in valores if x.strip()] + ["" for x in valores if not x.strip()]
+
+            return pd.Series(valores_modificados)
         
-        return pd.Series(valores_modificados)
-       
+        return data[name_col]
