@@ -426,20 +426,20 @@ REFERENCES public.frec_lectura_impresa (id_p403);
  ----------------------------------------------------
 -- Nombre columna: p407_1_1
 -- Tabla frec_comucacion_lecturas
-CREATE TABLE public.frec_comucacion_lecturas (
+CREATE TABLE public.frec_comunicacion_lecturas (
     id_p407_1_1 integer PRIMARY KEY,
     p407_1_1 VARCHAR(100)
 );
 
 -- Valores para insercion
-INSERT INTO public.frec_comucacion_lecturas VALUES 
+INSERT INTO public.frec_comunicacion_lecturas VALUES 
 (0, 'Valores Nulos'), (1, 'Diariamente'), (2, 'Varias veces a la semana'), (3, 'Una vez a la semana'), (4, 'Una vez al mes'), (5, 'Una vez cada tres meses'), (6, 'Por lo menos una vez al año');
 
 -- creamos la fk
 ALTER TABLE public.data_total
-ADD CONSTRAINT fk_frec_comucacion_lecturas
+ADD CONSTRAINT fk_frec_comunicacion_lecturas
 FOREIGN KEY (p407_1_1)
-REFERENCES public.frec_comucacion_lecturas (id_p407_1_1);
+REFERENCES public.frec_comunicacion_lecturas (id_p407_1_1);
 
  
  ----------------------------------------------------

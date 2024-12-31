@@ -1,5 +1,5 @@
 CREATE TABLE public.data_total(
-id INT,
+id INT PRIMARY KEY,
 CCDD INT,
 NOMBREDD VARCHAR(45),
 CCPP INT,
