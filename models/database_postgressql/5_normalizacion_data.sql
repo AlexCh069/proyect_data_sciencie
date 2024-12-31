@@ -49,7 +49,7 @@ WHERE p302_1 = 0 AND p302_2 = 0 AND p302_3 = 0 AND p302_4 = 0 AND p302_5 = 0 AND
 	  p302_6 = 0 AND p302_7 = 0 AND p302_8 = 0 AND p302_9 = 0 AND p302_10 = 0 AND
       p302_11 = 0 AND p302_12 = 0 AND p302_13 = 0 AND p302_14 = 0 AND p302_15 = 0;
 
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p302_1,
 DROP COLUMN p302_2,
@@ -111,7 +111,7 @@ ADD CONSTRAINT fk_read_leng_indg
 FOREIGN KEY (id)
 REFERENCES public.read_leng_indg (id_persona); */
 
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p308_2_1,
 DROP COLUMN p308_2_2,
@@ -160,8 +160,7 @@ FROM public.data_total
 WHERE p404_1 = 0 AND p404_2 = 0 AND p404_3 = 0 AND p404_4 = 0 AND
       p404_5 = 0 AND p404_6 = 0 AND p404_7 = 0 AND p404_8 = 0 AND p404_9 = 0;
 
-
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p404_1,
 DROP COLUMN p404_2,
@@ -219,8 +218,7 @@ WHERE p405_1 = 0 AND p405_2 = 0 AND p405_3 = 0 AND p405_4 = 0 AND
       p405_9 = 0 AND p405_10 = 0 AND p405_11 = 0 AND p405_12 = 0 AND p405_13 = 0;
 
 
-
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p405_1,
 DROP COLUMN p405_2,
@@ -273,8 +271,7 @@ FROM public.data_total
 WHERE p406_1 = 0 AND p406_2 = 0 AND p406_3 = 0 AND p406_4 = 0 AND
       p406_5 = 0 AND p406_6 = 0 AND p406_7 = 0 AND p406_8 = 0 AND p406_9 = 0;
 
-
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p406_1,
 DROP COLUMN p406_2,
@@ -323,8 +320,7 @@ FROM public.data_total
 WHERE p410_1 = 0 AND p410_2 = 0 AND p410_3 = 0 AND p410_4 = 0 AND p410_5 = 0 AND 
       p410_6 = 0 AND p410_7 = 0 AND p410_8 = 0 AND p410_9 = 0 AND p410_10 = 0;
 
-
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p410_1,
 DROP COLUMN p410_2,
@@ -372,8 +368,7 @@ FROM public.data_total
 WHERE p411_1 = 0 AND p411_2 = 0 AND p411_3 = 0 AND p411_4 = 0 AND
       p411_5 = 0 AND p411_6 = 0 AND p411_7 = 0 AND p411_8 = 0 AND p411_9 = 0;
 
-
--- BORRAMOS LA COMLUMNA CON EL NOMBRE DE LOS DEPARTAMENTOS
+-- BORRAMOS LA COMLUMNAS NORMALIZACADAS
 ALTER TABLE public.data_total
 DROP COLUMN p411_1,
 DROP COLUMN p411_2,
@@ -384,3 +379,193 @@ DROP COLUMN p411_6,
 DROP COLUMN p411_7,
 DROP COLUMN p411_8,
 DROP COLUMN p411_9;
+
+--------------------------------------------------------------------------------------------------------------------------------
+-- Tabla de razones de no lectura de solo libros
+-- columnas p413_1 a p413_20
+
+CREATE TABLE generos_tipos_libros (
+    id_gt_lib SERIAL PRIMARY KEY,
+    id_persona INT NOT NULL REFERENCES data_total(id),
+    gt_libs VARCHAR(100) NOT NULL -- genero / tipo de libro
+);
+
+-- Insertamos la data con valor de la tabla data_total
+INSERT INTO generos_tipos_libros (id_persona, gt_libs)
+SELECT id, 'Libros infantiles' FROM public.data_total WHERE p413_1 = 1
+UNION ALL
+SELECT id, 'Libros juveniles' FROM public.data_total WHERE p413_2 = 1
+UNION ALL
+SELECT id, 'Enciclopedias y diccionarios' FROM public.data_total WHERE p413_3 = 1
+UNION ALL
+SELECT id, 'Libros de textos escolares o universitarios' FROM public.data_total WHERE p413_4 = 1
+UNION ALL
+SELECT id, 'Manuales o guías metodológicas' FROM public.data_total WHERE p413_5 = 1
+UNION ALL
+SELECT id, 'Cocina' FROM public.data_total WHERE p413_6 = 1
+UNION ALL
+SELECT id, 'Religión' FROM public.data_total WHERE p413_7 = 1
+UNION ALL
+SELECT id, 'Filosofía y psicología' FROM public.data_total WHERE p413_8 = 1
+UNION ALL
+SELECT id, 'Superación personal/autoyuda' FROM public.data_total WHERE p413_9 = 1
+UNION ALL
+SELECT id, 'Ciencias sociales' FROM public.data_total WHERE p413_10 = 1
+UNION ALL
+SELECT id, 'Idiomas/Gramática/Lenguaje' FROM public.data_total WHERE p413_11 = 1
+UNION ALL
+SELECT id, 'Ciencias naturales y matemáticas' FROM public.data_total WHERE p413_12 = 1
+UNION ALL
+SELECT id, 'Geografía e historia' FROM public.data_total WHERE p413_13 = 1
+UNION ALL
+SELECT id, 'Tecnología (ciencias aplicadas)' FROM public.data_total WHERE p413_14 = 1
+UNION ALL
+SELECT id, 'Arte, diseño y decoración' FROM public.data_total WHERE p413_15 = 1
+UNION ALL
+SELECT id, 'Literatura (novela, cuento, novela gráfica, poesía, historieta)' FROM public.data_total WHERE p413_16 = 1
+UNION ALL
+SELECT id, 'Biografía o memorias' FROM public.data_total WHERE p413_17 = 1
+UNION ALL
+SELECT id, 'Ensayo/crónica' FROM public.data_total WHERE p413_18 = 1
+UNION ALL
+SELECT id, 'Otro' FROM public.data_total WHERE p413_20 = 1;
+
+-- Insertamos la data sin valor (util para un contraste futuro)
+INSERT INTO generos_tipos_libros (id_persona, gt_libs)
+SELECT id, 'sin data'  
+FROM public.data_total 
+WHERE p413_1 = 0 AND p413_2 = 0 AND p413_3 = 0 AND p413_4 = 0 AND
+      p413_5 = 0 AND p413_6 = 0 AND p413_7 = 0 AND p413_8 = 0 AND
+      p413_9 = 0 AND p413_10 = 0 AND p413_11 = 0 AND p413_12 = 0 AND
+      p413_13 = 0 AND p413_14 = 0 AND p413_15 = 0 AND p413_16 = 0 AND
+      p413_17 = 0 AND p413_18 = 0 AND p413_20 = 0;
+
+-- BORRAMOS LAS COLUMNAS NORMALIZADAS
+ALTER TABLE public.data_total
+DROP COLUMN p413_1,
+DROP COLUMN p413_2,
+DROP COLUMN p413_3,
+DROP COLUMN p413_4,
+DROP COLUMN p413_5,
+DROP COLUMN p413_6,
+DROP COLUMN p413_7,
+DROP COLUMN p413_8,
+DROP COLUMN p413_9,
+DROP COLUMN p413_10,
+DROP COLUMN p413_11,
+DROP COLUMN p413_12,
+DROP COLUMN p413_13,
+DROP COLUMN p413_14,
+DROP COLUMN p413_15,
+DROP COLUMN p413_16,
+DROP COLUMN p413_17,
+DROP COLUMN p413_18,
+DROP COLUMN p413_20;
+--------------------------------------------------------------------------------------------------------------------------------
+
+-- Tabla de elecciones para libros que no tengan que ver con trabajo o estudios
+-- columnas p414_1 a p414_12
+
+CREATE TABLE eleccion_libro (
+    id_gt_lib SERIAL PRIMARY KEY,
+    id_persona INT NOT NULL REFERENCES data_total(id),
+    elecc_lib VARCHAR(100) NOT NULL -- Identifcar eleccion de libros
+);
+
+-- Insertamos la data con valor de la tabla data_total
+INSERT INTO eleccion_libro (id_persona, elecc_lib)
+SELECT id, 'El autor/la autora' FROM public.data_total WHERE p414_1 = 1
+UNION ALL
+SELECT id, 'El título' FROM public.data_total WHERE p414_2 = 1
+UNION ALL
+SELECT id, 'El tema' FROM public.data_total WHERE p414_3 = 1
+UNION ALL
+SELECT id, 'La recomendación de un amigo/a o familiar' FROM public.data_total WHERE p414_4 = 1
+UNION ALL
+SELECT id, 'La recomendación de un/a bibliotecario/a – mediador/a' FROM public.data_total WHERE p414_5 = 1
+UNION ALL
+SELECT id, 'La recomendación de un/a librero/a' FROM public.data_total WHERE p414_6 = 1
+UNION ALL
+SELECT id, 'La recomendación del docente/profesor/a' FROM public.data_total WHERE p414_7 = 1
+UNION ALL
+SELECT id, 'Por la presentación (carátula, diseño, libro-álbum)' FROM public.data_total WHERE p414_8 = 1
+UNION ALL
+SELECT id, 'El precio' FROM public.data_total WHERE p414_9 = 1
+UNION ALL
+SELECT id, 'Por comentarios y/o anuncios en prensa, radio o televisión' FROM public.data_total WHERE p414_10 = 1
+UNION ALL
+SELECT id, 'Recomendaciones por redes sociales y/o sitios web especializados' FROM public.data_total WHERE p414_11 = 1
+UNION ALL
+SELECT id, 'Otro' FROM public.data_total WHERE p414_12 = 1;
+
+-- Insertamos la data sin valor (útil para un contraste futuro)
+INSERT INTO eleccion_libro (id_persona, elecc_lib)
+SELECT id, 'sin data'  
+FROM public.data_total 
+WHERE p414_1 = 0 AND p414_2 = 0 AND p414_3 = 0 AND p414_4 = 0 AND
+      p414_5 = 0 AND p414_6 = 0 AND p414_7 = 0 AND p414_8 = 0 AND
+      p414_9 = 0 AND p414_10 = 0 AND p414_11 = 0 AND p414_12 = 0;
+
+-- BORRAMOS LAS COLUMNAS NORMALIZADAS
+ALTER TABLE public.data_total
+DROP COLUMN p414_1,
+DROP COLUMN p414_2,
+DROP COLUMN p414_3,
+DROP COLUMN p414_4,
+DROP COLUMN p414_5,
+DROP COLUMN p414_6,
+DROP COLUMN p414_7,
+DROP COLUMN p414_8,
+DROP COLUMN p414_9,
+DROP COLUMN p414_10,
+DROP COLUMN p414_11,
+DROP COLUMN p414_12;
+--------------------------------------------------------------------------------------------------------------------------------
+-- Tabla de como obtuvo los libros 
+-- columnas p416_1 a p416_9
+
+CREATE TABLE obtencion_libros (
+    id_obt_lib SERIAL PRIMARY KEY,
+    id_persona INT NOT NULL REFERENCES data_total(id),
+    obtencion_lib VARCHAR(100) NOT NULL -- Identificar cómo obtuvo los libros
+
+);
+
+-- Insertamos la data con valor de la tabla data_total
+INSERT INTO obtencion_libros (id_persona, obtencion_lib)
+SELECT id, 'Los compró (incluye paga por suscripción)' FROM public.data_total WHERE p416_1 = 1
+UNION ALL
+SELECT id, 'Pagó por la fotocopia de los libros' FROM public.data_total WHERE p416_2 = 1
+UNION ALL
+SELECT id, 'Se los regalaron' FROM public.data_total WHERE p416_3 = 1
+UNION ALL
+SELECT id, 'Se los prestaron' FROM public.data_total WHERE p416_4 = 1
+UNION ALL
+SELECT id, 'Los pidió prestados en bibliotecas' FROM public.data_total WHERE p416_5 = 1
+UNION ALL
+SELECT id, 'Los descargó gratuitamente de internet' FROM public.data_total WHERE p416_6 = 1
+UNION ALL
+SELECT id, 'Por suscripción gratuita en plataformas digitales' FROM public.data_total WHERE p416_8 = 1
+UNION ALL
+SELECT id, 'Los tenía en su biblioteca personal (física o virtual)' FROM public.data_total WHERE p416_9 = 1
+UNION ALL
+SELECT id, 'Otro' FROM public.data_total WHERE p416_10 = 1;
+
+-- Insertamos la data sin valor (útil para un contraste futuro)
+INSERT INTO obtencion_libros (id_persona, obtencion_lib)
+SELECT id, 'sin data'  
+FROM public.data_total 
+WHERE p416_1 = 0 AND p416_2 = 0 AND p416_3 = 0 AND p416_4 = 0 AND
+      p416_5 = 0 AND p416_6 = 0 AND p416_8 = 0 AND p416_9 = 0 AND p416_10 = 0;
+
+-- BORRAMOS LAS COLUMNAS NORMALIZADAS
+ALTER TABLE public.data_total
+DROP COLUMN p416_1,
+DROP COLUMN p416_2,
+DROP COLUMN p416_3,
+DROP COLUMN p416_4,
+DROP COLUMN p416_5,
+DROP COLUMN p416_6,
+DROP COLUMN p416_8,
+DROP COLUMN p416_9,
+DROP COLUMN p416_10;
