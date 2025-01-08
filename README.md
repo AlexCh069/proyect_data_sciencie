@@ -4,9 +4,15 @@ Este proyecto (aun en proces), busca generar varios productos que pueden ser uti
 Los productos que se desea desarrollar son los siguientes
 
 ## Producto 1
-- Diseño de un modelo relacional para los datos obtenidos (en postgressql). En './models/database_postgressql' se esta almacenando las querys necesarias para poder replicar este modelo relacional
+Diseño de un modelo relacional para los datos obtenidos (en postgressql). En './models/database_postgressql' se esta almacenando las querys necesarias para poder replicar este modelo relacional
 
 ![alt text](./in/images/image.png)
+
+La numeracio indica el orden de ejecucion para la replicacion, empezando por la creacion de la tabla general, la insercion de la data, y los siguientes archivos se encargan de la creacion de tablas secundarias que ayudaran a la comprension contextual de la data que se encontraba muy disgregada. El resultado final se puede visualizar aqui:
+
+![alt text](./in/images/image2.png)
+
+Si bien contamos con mas de 30 tablas, estas pueden expresar informacion exacta de cada persona encuestada, ya sea sexo, etnia, ubicacion, lenguajes que habla, condiciones de comprension entre muchas otras. Ayudandonos de herramientas como PowerBy podemos obtener visualizaciones interesantes de esta data
 
 ## Producto 2
 - Diseño de un dashboard usando como fuente de datos nuestro modelo relacional
