@@ -3,7 +3,7 @@
 
 Este dashboard proporciona un análisis del interés lector en el Perú, mostrando datos como los hábitos de lectura, motivaciones, libros leidos (impresos o digitales), segmetados por diversas variables demograficas y socioculturales. Se resaltaran las secciones para luego comentar cada una de estas
 
-![alt text](./in/images/dashboard_mod.png)
+![alt text](./in/images/dash_mod.png)
 
 El dashboard ofrece una herramienta visual, brindando insights que pueden ser utilizados por investigadores, educadores y organizaciones culturales para fomentar políticas y estrategias de promoción de la lectura. Su diseño interactivo facilita la comprensión y segmentación de datos de acuerdo a los filtros seleccionados.
 
