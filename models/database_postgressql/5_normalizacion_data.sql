@@ -236,7 +236,7 @@ DROP COLUMN p405_13;
 
 --------------------------------------------------------------------------------------------------------------------------------
 
--- Tabla de reazones de si lectura (libros, periodicos, revistas, etc)
+-- Tabla de razones de si lectura (libros, periodicos, revistas, etc)
 -- columnas p406_1 a p406_9
 CREATE TABLE razones_si_lectura (
     id_rz_lectura SERIAL PRIMARY KEY,
